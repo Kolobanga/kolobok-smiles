@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>kolobok-smile</title>
+
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js" ></script>
+  
+  <link rel="import" href="../bower_components/paper-styles/demo-pages.html">
+  <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="../bower_components/iron-meta/iron-meta.html">
+
+  <link rel="import" href="../kolobok-icon.html">
+  <link rel="import" href="../kolobok-smiles.html">
+</head>
+
+<body>
+  <custom-style>
+    <style>
+  
+      h2 {
+        text-align: center;
+      }
+      .set {
+        @apply --layout-horizontal;
+        @apply --layout-wrap;
+        @apply --layout-center-justified;
+        padding: 30px;
+        margin: auto;
+        max-width: 750px;
+        border-bottom: 1px solid silver;
+      }
+      .set:last-of-type {
+        border-bottom: none;
+      }
+      .container {
+        @apply --layout-vertical;
+        @apply --layout-end-justified;
+
+        min-height: 100px;
+        min-width: 100px;
+
+        margin: 15px;
+        text-align: center;
+        border: 1px solid #D7DBDD;
+      }
+      .container:hover {
+        box-shadow: 0 2px 4px rgba(0,0,0,.1);
+      }
+      kolobok-icon {
+        @apply --layout-flex;
+      }
+      .container > div {
+        padding: 5px;
+        text-align: center;
+        color: black;
+        font-size: 11px;
+      }
+    </style>
+  </custom-style>
+
+  <script>
+    window.addEventListener('WebComponentsReady', _ => {
+
+      let iconsets = new Polymer.IronMeta({type: 'iconset'}).list;
+
+      iconsets.forEach(function(iconset) {
+        
+        let fragment = document.createDocumentFragment();
+
+        let title = document.createElement('h2');
+        title.textContent = iconset.name;
+        fragment.appendChild(title);
+
+        let set = document.createElement('div');
+        set.classList.add('set');
+        fragment.appendChild(set);
+
+        iconset.getIconNames().forEach(function(name) {
+          let container = document.createElement('span');
+          container.classList.add('container');
+
+          let icon = document.createElement('kolobok-icon');
+          icon.icon = name;
+          
+          container.appendChild(icon);
+
+          let text = document.createElement('div');
+          text.textContent = `:${name.split(':')[1]}:`;
+          container.appendChild(text);
+
+          set.appendChild(container);
+          
+        });
+
+        document.body.appendChild(fragment);
+        
+      });
+    });
+
+  </script>
+</body>
+</html>

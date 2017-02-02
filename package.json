@@ -1,0 +1,35 @@
+{
+  "name": "kolobok-smiles",
+  "version": "0.0.0",
+  "description": "Polymer 2.0 web component for kolobok smiles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kolobanga/kolobok-smiles.git"
+  },
+  "keywords": [
+    "smile",
+    "emoji",
+    "web-component",
+    "polymer",
+    "kolobok"
+  ],
+  "author": "dimon.durak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kolobanga/kolobok-smiles/issues"
+  },
+  "homepage": "https://github.com/Kolobanga/kolobok-smiles#readme",
+  "dependencies": {
+    "gulp-base64-inline": "^1.0.3",
+    "gulp-inject": "^4.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "image-size": "^0.5.1",
+    "vinyl-fs": "^2.4.4"
+  }
+}

@@ -1,0 +1,73 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+<link rel="import" href="bower_components/iron-icon/iron-icon.html">
+
+<dom-module id="kolobok-icon">
+  <template>
+    <style>
+      :host {
+        @apply --layout-inline;
+        @apply --layout-center-center;
+      }
+      iron-icon {
+        --iron-icon-width: var(--kolobok-icon-width);
+        --iron-icon-height: var(--kolobok-icon-height);
+        --iron-icon-fill-color: var(--kolobok-icon-fill-color, currentColor);
+        --iron-icon-stroke-color: var(--kolobok-icon-stroke-color, none);
+      }
+    </style>
+    
+    <iron-icon icon="[[_icon]]"></iron-icon>
+    
+  </template>
+
+  <script>
+    'use strict';
+
+    class KolobokIcon extends Polymer.Element{
+
+      static get is() { return 'kolobok-icon'; }
+
+      static get config() {
+        return {
+          properties: {
+            icon: { type: String },
+            size: { type: Number, value: 24}
+          }
+        };
+      }
+
+      constructor() {
+        super()
+        this._icon = '';
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      get icon() { return this.getAttribute('icon') }
+
+      set icon(value) { 
+
+        if (!value) { return }
+
+        let [iconset, icon] = value.split(':');
+        let icons = new Polymer.IronMeta( {type: 'iconset'} ).byKey(iconset);
+        let kolobok = icons._createIconMap()[icon];
+        let width  = (kolobok.width)  ? kolobok.width.baseVal.value  : this.size;
+        let height = (kolobok.height) ? kolobok.height.baseVal.value : this.size;
+
+        this.updateStyles({
+          '--kolobok-icon-width': `${width}px`,
+          '--kolobok-icon-height': `${height}px`
+        });
+
+        this._icon = value;
+        this.setAttribute('icon', value);
+      }
+    }
+
+    customElements.define(KolobokIcon.is, KolobokIcon);
+
+  </script>
+</dom-module>
