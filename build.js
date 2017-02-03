@@ -1,7 +1,5 @@
 /**
- * Создаёт из gif файлов элементы с наборами смайлов и описание к ним
- * 
- * TODO - надо что-то сделать с плагином gulp-base64-inline 
+ * Создаёт из gif файлов элементы `<iron-iconset-svg>` с наборами смайлов 
  * 
  */
 
@@ -31,7 +29,6 @@ api.getFolders = dir => api.fs.readdirSync(dir)
 api.generateIconset = (pack, template, destination) => api.vfs.src(template)
     .pipe(api.rename( path => path.basename = `kolobok-${pack}-smile`))
     .pipe(api.replace('{{pack}}', pack))
-    .pipe(api.replace('{{Pack}}', `${pack[0].toUpperCase()}${pack.slice(1)}`))
     .pipe(api.inject(api.vfs.src(`./images/${pack}/*`, {read: false}), {
         starttag: '<!-- kolobki:start -->',
         endtag:   '<!-- kolobki:end -->', 
@@ -39,6 +36,8 @@ api.generateIconset = (pack, template, destination) => api.vfs.src(template)
         transform: api.transform.toImageTag
     }))
     .pipe(api.base64()) 
+    .pipe(api.replace('"url(data:image/gif;', '"data:image/gif;'))
+    .pipe(api.replace(')" />', '" />'))
     .pipe(api.vfs.dest(destination));
 
 let template = './template/kolobok-iconset-template.html';
